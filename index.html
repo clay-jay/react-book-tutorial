@@ -5,8 +5,13 @@
         <title>React Book Tutorial</title>
         <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-        <!-- Не используйте это в production -->
         <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+        <style>
+            .red {
+                color: red;
+            }
+        </style>
     </head>
     <body>
         <div id="root"></div>
@@ -15,8 +20,20 @@
             return <p>React component</p>
         }
 
+        class HugeContainer extends React.Component{
+            render() {
+                return(
+                    <React.Fragment>
+                        <h1>Huge Container</h1>
+                        <p className = "red">has App in it</p>
+                        <App />
+                    </React.Fragment>
+                )
+            }
+        }
+
         ReactDOM.render(
-            <App />,
+            <HugeContainer />,
             document.getElementById("root")
 
         )
@@ -27,7 +44,7 @@
         ReactDOM.render(
             <h2>Test</h2>, document.getElementById("root")
         )*/
-                
+
         </script>
     </body>
 </html>
