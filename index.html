@@ -51,22 +51,26 @@
             {
                 id: 1,
                 author: 'Вася Пупкин',
-                text: 'В четверг, четвертого числа...'
+                text: 'В четверг, четвертого числа...',
+                bigText: 'в четыре с четвертью часа четыре чёрненьких чумазеньких чертёнка чертили чёрными чернилами чертёж.'
             },
             {
                 id: 2,
                 author: 'Иванов Иван',
-                text: 'Frontend - это интересно!'
+                text: 'Frontend - это интересно!',
+                bigText: 'Wow'
             },
             {
                 id: 3,
                 author: 'Username',
-                text: 'Новые новости от %username%'
+                text: 'Новые новости от %username%',
+                bigText: 'доп строка'
             },
             {
                 id: 4,
                 author: 'Рандом',
-                text: 'Очень важный твит, который никому не интересен'
+                text: 'Очень важный твит, который никому не интересен',
+                bigText: 'mhm...'
             }
         ];
         
@@ -87,14 +91,21 @@
                 //отсюда видно что был сгенерирован React объект с свойствами из нашего массива
             }
             
+            state = {
+                clickCount: 0,
+            }
+            handleClickCounter = () =>{
+                this.setState({clickCount: ++this.state.clickCount})
+            }
             render() {
                 const {data} = this.props
                 return (
                     <div className="news">
                         {this.renderNews()} 
-                            {
-                                data.length ? <strong>Количество новостей: {data.length}</strong> : null
-                            }
+                        {
+                            data.length ? <strong onClick={this.handleClickCounter}>Количество новостей: {data.length}</strong> : null
+                        }
+                        <p>Всего кликов: {this.state.clickCount}</p>
                     </div>
                 );
             }
@@ -105,12 +116,23 @@
             }
 
         class Article extends React.Component{
+            state = {
+                    visible: false
+            }
+            handleReadMoreClick = (e) => {
+                e.preventDefault()
+                this.setState({visible: true})
+            }
             render(){
-                const { author, text } = this.props.data
+                const { author, text, bigText } = this.props.data
+                const { visible }= this.state
+                console.log('render', this)
                 return(
                     <div className="article">
                         <p className="news__author">{author}:</p>
                         <p className="news__text">{text}</p>
+                        {!visible && <a onClick = {this.handleReadMoreClick} href="#" className="news__bigText">Подробнее</a>}
+                        {visible && <p className="news__bigText">{bigText}</p>}
                     </div>
                 )
             }
@@ -119,7 +141,8 @@
         Article.propTypes = {
             data: PropTypes.shape({
                 author: PropTypes.string.isRequired,
-                text: PropTypes.string.isRequired
+                text: PropTypes.string.isRequired,
+                bigText: PropTypes.string.isRequired
             })
         }
 
