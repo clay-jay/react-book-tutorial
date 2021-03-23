@@ -7,6 +7,39 @@
         <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
         <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 
+        <style>
+            .none{
+                display: none;
+            }
+
+            body{
+                background: rgba(0, 102, 255, 0.38);
+                font-family: sans-serif;
+            }
+
+            p{
+                margin: 0 0 5px;
+            }
+
+            .article{
+                background: #FFF;
+                border: 1px solid rgba(0, 89, 181, 0.82);
+                width: 600px;
+                margin: 0 0 5px;
+                box-shadow: 2px 2px 5px -1px rgb(0, 81, 202);
+                padding: 3px 5px;
+            }
+
+            .news__author{
+                text-decoration: underline;
+                color: #007DDC;
+            }
+            
+            .news__count{
+                margin: 10px 0 0 0;
+                display: block;
+            }
+        </style>
     </head>
     <body>
         <div id="root"></div>
@@ -37,38 +70,55 @@
         ];
         
         class News extends React.Component{
-            render(){
-                const newsTemplate = this.props.data.map(function(item){
-                    return (
-                        <div key={item.id}>
-                            <p className="news__author">{item.author}:</p>
-                            <p className="news__text">{item.text}</p>
-                        </div>
-                    )
-                })
-                
+            renderNews = () => {
+                const {data} = this.props
+                let newsTemplate = null
+                if (data.length) {
+                    newsTemplate = this.props.data.map(function(item){
+                        return <Article key={item.id} data={item}/>
+                    })
+                }
+                else{
+                    newsTemplate = <p>Новостей нет</p>
+                }
+                return newsTemplate
                 //console.log(newsTemplate)
                 //отсюда видно что был сгенерирован React объект с свойствами из нашего массива
-
+            }
+            
+            render() {
+                const {data} = this.props
                 return (
                     <div className="news">
-                        {newsTemplate}
+                        {this.renderNews()} 
+                            {
+                                data.length ? <strong>Количество новостей: {data.length}</strong> : null
+                            }
                     </div>
                 )
             }
         }
 
-        const Comments = () => {
-            return <p>No comments either</p>
+        class Article extends React.Component{
+            render(){
+                const { author, text } = this.props.data
+                return(
+                    <div className="article">
+                        <p className="news__author">{author}:</p>
+                        <p className="news__text">{text}</p>
+                    </div>
+                )
+            }
+
         }
 
         class App extends React.Component{
             render() {
                 return(
                     <React.Fragment>
+                        <h3>Новости</h3>
                         {/*добавляем свойство*/}
                         <News data={newsArray} />
-                        <Comments />
                     </React.Fragment>
                 )
             }
@@ -79,14 +129,6 @@
             document.getElementById("root")
 
         )
-        /*
-        ReactDOM.render(
-            <h1>Hello World</h1>, document.getElementById("root")
-        )
-        ReactDOM.render(
-            <h2>Test</h2>, document.getElementById("root")
-        )*/
-
         </script>
     </body>
 </html>
