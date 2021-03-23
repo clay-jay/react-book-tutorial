@@ -40,6 +40,9 @@
                 margin: 10px 0 0 0;
                 display: block;
             }
+            .text-input {
+                margin: 0 5px 5px 0;
+            }
         </style>
     </head>
     <body>
@@ -72,6 +75,7 @@
                 text: 'Очень важный твит, который никому не интересен',
                 bigText: 'mhm...'
             }
+            
         ];
         
         class News extends React.Component{
@@ -91,12 +95,6 @@
                 //отсюда видно что был сгенерирован React объект с свойствами из нашего массива
             }
             
-            state = {
-                clickCount: 0,
-            }
-            handleClickCounter = () =>{
-                this.setState({clickCount: ++this.state.clickCount})
-            }
             render() {
                 const {data} = this.props
                 return (
@@ -105,7 +103,6 @@
                         {
                             data.length ? <strong onClick={this.handleClickCounter}>Количество новостей: {data.length}</strong> : null
                         }
-                        <p>Всего кликов: {this.state.clickCount}</p>
                     </div>
                 );
             }
@@ -126,7 +123,7 @@
             render(){
                 const { author, text, bigText } = this.props.data
                 const { visible }= this.state
-                console.log('render', this)
+                //console.log('render', this)
                 return(
                     <div className="article">
                         <p className="news__author">{author}:</p>
@@ -146,11 +143,32 @@
             })
         }
 
+        class TextInput extends React.Component{
+            constructor(props){
+                super(props)
+                this.input = React.createRef()
+            }
+            handleButtonInputClick = (e) => {
+                alert(this.input.current.value)
+            }
+            render(){
+                return(
+                    <div>
+                        <input className="text-input" defaultValue = '' ref = {this.input} placeholder = "Введите значение"></input>
+                        <button onClick = {this.handleButtonInputClick}>Показать текст</button>
+                    </div>
+                    
+                    
+                )
+            }
+        }
+
         class App extends React.Component{
             render() {
                 return(
                     <React.Fragment>
                         <h3>Новости</h3>
+                        <TextInput />
                         {/*добавляем свойство*/}
                         <News data={newsArray}/>
                     </React.Fragment>
