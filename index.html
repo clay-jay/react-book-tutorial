@@ -16,10 +16,15 @@
     <body>
         <div id="root"></div>
         <script type="text/babel">
+        //компонент через функцию в переменной
+        //всегда должен содержать один элемент(<div> или пр.)
+        //но внутри него может содержаться сколько угодно элементов
         const App = () => {
             return <p>React component</p>
         }
 
+        //компонент через класс
+        //чтобы избавиться от лишнего <div> можно воспользоваться <React.Fragment>
         class HugeContainer extends React.Component{
             render() {
                 return(
