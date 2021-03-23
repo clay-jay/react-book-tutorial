@@ -20,35 +20,43 @@
         //всегда должен содержать один элемент(<div> или пр.)
         //но внутри него может содержаться сколько угодно элементов
         const App = () => {
-            return <p>React component</p>
+            return (
+                <div>
+                    <p>React component</p>
+                    <News />
+                    <Comments />
+                </div>
+            )
+        }
+        
+        const News = () => {
+            return (<p>There is no news for now :/</p>)
+        }
+        
+        const Comments = () => {
+            return <p>Nothing to comment</p>
         }
 
         //компонент через класс
         //чтобы избавиться от лишнего <div> можно воспользоваться <React.Fragment>
-        class HugeContainer extends React.Component{
+        /*class HugeContainer extends React.Component{
             render() {
                 return(
                     <React.Fragment>
                         <h1>Huge Container</h1>
                         <p className = "red">has App in it</p>
                         <App />
+                        <News />
                     </React.Fragment>
                 )
             }
-        }
+        }*/
 
         ReactDOM.render(
-            <HugeContainer />,
+            <App />,
             document.getElementById("root")
 
         )
-        /*
-        ReactDOM.render(
-            <h1>Hello World</h1>, document.getElementById("root")
-        )
-        ReactDOM.render(
-            <h2>Test</h2>, document.getElementById("root")
-        )*/
 
         </script>
     </body>
